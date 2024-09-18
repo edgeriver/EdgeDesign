@@ -1,0 +1,59 @@
+@startuml 实用组件
+' 调用模块
+!unquoted procedure $SALT($x)
+"{{
+salt
+%invoke_procedure("_"+$x)
+}}" as $x
+!endprocedure
+
+!unquoted procedure $SALT_INCLUDE($x)
+"
+{{
+salt
+!include $x
+}}
+" as $getComponent($x)
+!endprocedure
+
+!unquoted function $getComponent($arg)
+    !$List = %splitstr($arg, "\")
+    !foreach $item in $List
+        !$arg = $item
+    !endfor
+    !$arg = %splitstr($arg, ".")
+    !return $arg[0]
+!endfunction
+
+
+!procedure $processJsonData($jsonData)
+!$jsonData=$jsonData.data
+    !foreach $key in %get_json_keys($jsonData)
+        !$statex = $getStateFromKey($key)
+        ' state "$key" as $statex{
+            !foreach $item in $jsonData[$key]
+             !$statex1 = $statex+$getStateFromKey($item)
+            state "$item" as  $statex1
+            !endfor
+        ' }
+    !endfor
+!endprocedure
+
+!function $getStateFromKey($arg)
+    !$stateParts = %splitstr($arg,"-")
+    !return $stateParts[0]
+!endfunction
+
+!unquoted function strcovertjson($arg)
+!return %str2json($arg)
+!endfunction
+
+!unquoted procedure $stateEx($item,$Prefix)
+!$statext = $Prefix+$getStateFromKey($item)
+state "$item" as  $statext
+!endprocedure
+
+!unquoted function $retrun_text($arg)
+    !return $arg
+!endfunction
+@enduml

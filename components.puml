@@ -1,0 +1,40 @@
+@startuml 组件函数
+!function $control_button($width,$control_type)
+!$spaces=''
+!while %strlen($spaces) <= $width
+!$spaces=$spaces+" "
+!endwhile
+  !return "<font:Arial>" + $spaces + "<font:monospaced>" + $control_type + "</font>"
+!endfunction
+
+!function $control_input($width,$control_type,$position)
+!$spaces=''
+!while %strlen($spaces) <= $width
+!$spaces=$spaces+' '
+!endwhile
+!if $position=='L'
+!return '<font:Arial>' + $spaces  +$control_type + '</font>'
+!else
+!return '<font:Arial>'   + $control_type + $spaces + '</font>'
+!endif
+!endfunction
+
+
+!function $repeat_space($arg)
+!$space=''
+!while $arg !=0
+!$space= ' ' + $space
+!$arg = $arg - 1
+!endwhile
+!return $space
+!endfunction
+
+!procedure $repeat_newline($arg)
+!$space=''
+!while $arg !=0
+.
+!$arg = $arg - 1
+!endwhile
+!endprocedure
+
+@enduml
